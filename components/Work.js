@@ -78,7 +78,7 @@ export const WorkExp = ({ title, exp }) => {
         <h1 className="text-primary fw-bold">{title}</h1>
         <div className="px-sm-5">
           {exp.map((value, index) => (
-            <div>
+            <div key={index}>
               <h2 className="text-primary fw-bold">{value.company}</h2>
               <div className="row">
                 <h5 className="text-primary fw-bold col">{value.title}</h5>
@@ -86,8 +86,8 @@ export const WorkExp = ({ title, exp }) => {
                   {value.duration}
                 </p>
               </div>
-              {value.description.map((points) => (
-                <ul>
+              {value.description.map((points, index) => (
+                <ul key={index}>
                   <li>{points}</li>
                 </ul>
               ))}

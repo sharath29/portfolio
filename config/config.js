@@ -1,4 +1,4 @@
-import profile from "./profile-photo.jpg";
+import profile from "./profile.png";
 import {
   faAppStore,
   faFirefox,
