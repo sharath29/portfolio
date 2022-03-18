@@ -65,7 +65,7 @@ export const Footer = () => {
             <a>sharath savasere</a>
           </Link>
           . Open sourced with love under{" "}
-          <Link href="https://github.com/hashirshoaeb/portfolio/blob/main/LICENSE">
+          <Link href="https://github.com/sharath29/portfolio/blob/main/LICENSE">
             <a>MIT</a>
           </Link>{" "}
           License
