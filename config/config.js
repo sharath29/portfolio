@@ -1,13 +1,19 @@
-import profile from "./profile.png";
+// config/config.js
+import getConfig from "next/config";
 import {
-  faAppStore,
   faFirefox,
   faGithub,
-  faGooglePlay,
   faTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { faNewspaper } from "@fortawesome/free-solid-svg-icons";
+
+// read basePath exported from next.config.js
+const { publicRuntimeConfig } = getConfig();
+const BASE = publicRuntimeConfig?.basePath || "";
+
+// profile image served from /public
+const PROFILE_SRC = `${BASE}/profile.png`;
 
 export const navigation = {
   name: "Sharath",
@@ -22,12 +28,12 @@ export const intro = {
   title: "Hey, I'm Sharath Savasere",
   description:
     "Computer Engineer focused on building distributed systems. I love turning complex problems into reliable, scalable software.",
-  image: profile.src,
+  image: PROFILE_SRC,
   buttons: [
     { title: "Contact Me", link: "#contact", isPrimary: true },
     {
       title: "Resume",
-      link: "https://drive.google.com/file/d/1WtvlHli8xczBBwFC7-LSFjyRitMhzAP4/view?usp=drive_link",
+      link: "https://drive.google.com/file/d/1E3CEN2wh2hbW5pWsaXLZnGeYHofv3LJ6/view?usp=sharing",
       isPrimary: false,
     },
   ],
@@ -173,7 +179,7 @@ export const contact = {
 export const SEO = {
   title: "Sharath Savasere",
   description: "Backend + Distributed Systems Engineer. I build reliable, scalable software.",
-  image: profile.src,
+  image: PROFILE_SRC,
 };
 
 export const socials = {
@@ -195,9 +201,10 @@ export const socials = {
   ],
 };
 
-// Leaving this section structure intact; adjusted only wording.
+// You can customize or remove this "links" block if not needed.
+// (Kept from your original template but consider pointing to your own handles.)
 export const links = {
-  image: profile.src,
+  image: PROFILE_SRC,
   title: "@hashirshoaeb",
   description: "Computer Engineer | Flutter | React.js Developer",
   cards: [
