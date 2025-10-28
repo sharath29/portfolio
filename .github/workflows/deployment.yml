@@ -33,11 +33,7 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
-      # Workaround for old webpack on OpenSSL 3 (Node 17+)
-      - name: Enable legacy OpenSSL for webpack
-        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
-
-      # Optional but quiets Browserslist warnings and keeps targets fresh
+      # Optional: keep Browserslist DB fresh to remove warnings
       - name: Update Browserslist DB
         run: npx browserslist@latest --update-db
 
@@ -56,8 +52,11 @@ jobs:
         run: npm ci
 
       - name: Build & Export
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
         run: |
           echo "Using BASE_PATH=$BASE_PATH"
+          echo "NODE_OPTIONS=$NODE_OPTIONS"
           npm run build
           npm run export
           touch ./out/.nojekyll
