@@ -1,3 +1,4 @@
+# .github/workflows/deployment.yml
 name: Node.js CI
 
 on:
@@ -7,7 +8,7 @@ on:
     branches: [ main ]
 
 permissions:
-  contents: write
+  contents: write  # needed for gh-pages deploy
 
 concurrency:
   group: pages-${{ github.ref }}
@@ -17,24 +18,41 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [20.x]  # modern LTS; fewer sharp headaches
-
     steps:
       - uses: actions/checkout@v4
 
+      # Set BASE_PATH to /<repo-name> for next export + GitHub Pages
       - name: Set BASE_PATH
         run: echo "BASE_PATH=/${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      # Node 20 LTS + npm cache
+      - name: Use Node.js 20.x
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
           cache: npm
           cache-dependency-path: package-lock.json
 
-      - name: Install deps
+      # Workaround for old webpack on OpenSSL 3 (Node 17+)
+      - name: Enable legacy OpenSSL for webpack
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
+
+      # Optional but quiets Browserslist warnings and keeps targets fresh
+      - name: Update Browserslist DB
+        run: npx browserslist@latest --update-db
+
+      # Cache Next.js build artifacts for faster CI
+      - name: Cache Next build
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+            node_modules/.cache
+          key: next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            next-${{ runner.os }}-
+
+      - name: Install dependencies
         run: npm ci
 
       - name: Build & Export
