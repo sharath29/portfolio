@@ -27,7 +27,7 @@ export const intro = {
     { title: "Contact Me", link: "#contact", isPrimary: true },
     {
       title: "Resume",
-      link: "https://drive.google.com/file/d/1E3CEN2wh2hbW5pWsaXLZnGeYHofv3LJ6/view?usp=sharing",
+      link: "https://drive.google.com/file/d/1WtvlHli8xczBBwFC7-LSFjyRitMhzAP4/view?usp=drive_link",
       isPrimary: false,
     },
   ],
